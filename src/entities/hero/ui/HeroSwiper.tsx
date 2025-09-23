@@ -23,7 +23,7 @@ export interface IMovie {
 }
 
 interface Props {
-  movies: IMovie[];
+  data: IMovie[];
 }
 
 export const HeroSwiper: FC<Props> = memo(({ data }) => {
