@@ -11,3 +11,8 @@ export const fetchMovieById = async (id: string) => {
   const response = await api.get(`/movie/${id}`);
   return response.data;
 };
+
+export const fetchMovieInfo = async (id: string, path: string) => {
+  const response = await api.get(`/movie/${id}/${path}`);
+  return response.data;
+};
