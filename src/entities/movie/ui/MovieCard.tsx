@@ -12,13 +12,22 @@ export const MovieCard: FC<Props> = memo((props) => {
   const navigate = useNavigate();
 
   return (
-    <div>
-      <div onClick={() => navigate(`/movie/${movie.id}`)}>
-        <img src={createImageUrl(movie.poster_path)} alt="" />
+    <div
+      className="cursor-pointer"
+      onClick={() => navigate(`/movie/${movie.id}`)}
+    >
+      <div className="w-[260px] h-[385px] overflow-hidden rounded-lg shadow-md">
+        <img
+          src={createImageUrl(movie.poster_path)}
+          alt={movie.title}
+          className="w-full h-full object-cover"
+        />
       </div>
-      <div>
-        <h3>{movie.title}</h3>
-        <p>{movie.vote_average}</p>
+      <div className="mt-2">
+        <h3 className="text-white text-lg font-semibold line-clamp-1">
+          {movie.title}
+        </h3>
+        <p className="text-sm text-gray-300">Rating: {movie.vote_average}</p>
       </div>
     </div>
   );

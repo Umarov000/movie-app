@@ -2,23 +2,23 @@ import { memo, type FC } from "react";
 import { useMovie } from "../../model/useMovie";
 import { createImageUrl } from "@/shared/utils";
 import { Image } from "antd";
+import { NavLink } from "react-router-dom";
 
 interface Props {
   id: string;
 }
+const tabs = [
+  { path: "", label: "Reviews" },
+  { path: "cast", label: "Cast" },
+  { path: "others", label: "Other" },
+];
 
-interface IReview {
-  id: string;
-  author: string;
-  content: string;
-  created_at: string;
-}
+
 
 export const MovieInfo: FC<Props> = memo(({ id }) => {
   const { getMovieById, getMovieInfo } = useMovie();
   const { data } = getMovieById(id);
   const { data: imageData } = getMovieInfo(id, "images");
-  const { data: reviews } = getMovieInfo(id, "reviews");
   console.log(data);
 
   return (
@@ -71,26 +71,24 @@ export const MovieInfo: FC<Props> = memo(({ id }) => {
             />
           ))}
       </section>
-
-      {reviews?.results?.length > 0 && (
-        <section className="container py-6 space-y-4">
-          <h2 className="text-2xl font-semibold text-[#cdc6c6]">Reviews</h2>
-          {reviews.results.map((review: IReview) => (
-            <div
-              key={review.id}
-              className="p-4   rounded-lg shadow-sm bg-[#d4d4d4] "
-            >
-              <p className="text-sm text-gray-500">
-                By <span className="font-medium">{review.author}</span> •{" "}
-                {new Date(review.created_at).toLocaleDateString()}
-              </p>
-              <p className="mt-2 text-gray-800 dark:text-gray-200 line-clamp-5">
-                {review.content}
-              </p>
-            </div>
-          ))}
-        </section>
-      )}
+      <div className="container flex gap-4">
+        {tabs.map((tab) => (
+          <NavLink
+            key={tab.path}
+            to={tab.path}
+            end
+            className={({ isActive }) =>
+              `px-4 py-2 font-medium ${
+                isActive
+                  ? "border-b-2 border-py text-py dark:text-white"
+                  : "text-gray-400 dark:text-gray-300"
+              }`
+            }
+          >
+            {tab.label}
+          </NavLink>
+        ))}
+      </div>
     </div>
   );
 });
